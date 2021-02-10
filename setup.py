@@ -1,5 +1,5 @@
 # from setuptools import find_packages, setup
-from setuptools import setup, find_packages, Extension
+from setuptools import setup, find_packages
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
