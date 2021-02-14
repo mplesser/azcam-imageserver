@@ -3,17 +3,22 @@ import socket
 import time
 
 import azcam
-from azcam.sendimage import SendImage
+from azcam.baseobject import Objects
 
 
-class SendImage(SendImage):
+class SendImage(Objects):
     """
     Class to send image to a remote image server.
     """
 
-    def __init__(self):
+    def __init__(self, obj_id="sendimage", name="SendImage"):
 
-        super().__init__()
+        super().__init__(obj_id, name)
+
+        self.remote_imageserver_host = ""
+        self.remote_imageserver_port = 0
+        self.remote_imageserver_type = ""
+        self.remote_imageserver_filename = ""
 
         self.timeout = 10.0
         self.overwrite = 0
@@ -67,12 +72,12 @@ class SendImage(SendImage):
             filename = self.remote_imageserver_filename
         self.remote_imageserver_filename = filename
 
-        self.overwrite = azcam.api.exposure.overwrite
-        self.test_image = azcam.api.exposure.test_image
-        self.display_image = azcam.api.exposure.display_image
-        self.filetype = azcam.api.exposure.filetype
-        self.size_x = azcam.api.exposure.size_x
-        self.size_y = azcam.api.exposure.size_y
+        self.overwrite = azcam.db.exposure.overwrite
+        self.test_image = azcam.db.exposure.test_image
+        self.display_image = azcam.db.exposure.display_image
+        self.filetype = azcam.db.exposure.filetype
+        self.size_x = azcam.db.exposure.size_x
+        self.size_y = azcam.db.exposure.size_y
 
         if self.remote_imageserver_type == "azcam":
             self.azcam_imageserver(filename)
