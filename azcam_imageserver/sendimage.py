@@ -3,17 +3,17 @@ import socket
 import time
 
 import azcam
-from azcam.baseobject import Objects
+from azcam.tools import Tools
 
 
-class SendImage(Objects):
+class SendImage(Tools):
     """
     Class to send image to a remote image server.
     """
 
-    def __init__(self, obj_id="sendimage", name="SendImage"):
+    def __init__(self, obj_id="sendimage", description=None):
 
-        super().__init__(obj_id, name)
+        super().__init__(obj_id, description)
 
         self.remote_imageserver_host = ""
         self.remote_imageserver_port = 0
