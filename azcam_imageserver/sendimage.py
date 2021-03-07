@@ -11,9 +11,9 @@ class SendImage(Tools):
     Class to send image to a remote image server.
     """
 
-    def __init__(self, obj_id="sendimage", description=None):
+    def __init__(self, tool_id="sendimage", description=None):
 
-        super().__init__(obj_id, description)
+        super().__init__(tool_id, description)
 
         self.remote_imageserver_host = ""
         self.remote_imageserver_port = 0
