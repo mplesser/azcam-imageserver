@@ -1,25 +1,19 @@
-# xxx
+# azcam-imageserver
 
-*azcam-xxx* is an *azcam* extension to ...
-
-Blah Blah blah
+*azcam-imageserver* is an *azcam* extension which supports sending an image to a remote host running an image server which receives the image.
 
 ## Installation
 
-`pip install azcam-xxx`
+`pip install azcam-imageserver`
 
-Or download from github: https://github.com/mplesser/azcam-xxx.git.
+Or download from github: https://github.com/mplesser/azcam-imageserver.git.
 
-## Code Examples
+## Usage
 
-**Usage**:
-
-...
-
-**Example**:
-
-   `...`
-
-**Notes**:
-
-   Blah blah blah
+```python
+from azcam_imageserver.sendimage import SendImage
+sendimage = SendImage()
+remote_imageserver_host = "10.0.0.1"
+remote_imageserver_port = 6543
+sendimage.set_remote_imageserver(remote_imageserver_host, remote_imageserver_port, "azcam")
+```
