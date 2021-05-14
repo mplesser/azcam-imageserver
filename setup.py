@@ -12,8 +12,9 @@ setup(
     long_description=long_description,
     author="Michael Lesser",
     author_email="mlesser@arizona.edu",
-    keywords="python",
+    keywords="",
     packages=find_packages(),
     zip_safe=False,
+    url="https://mplesser.github.io/azcam/",
     install_requires=["azcam"],
 )
