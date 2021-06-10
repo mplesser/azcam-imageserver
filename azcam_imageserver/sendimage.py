@@ -63,14 +63,16 @@ class SendImage(Tools):
             self.remote_imageserver_filename,
         ]
 
-    def send_image(self, filename=None):
+    def send_image(self, localfile=None, remotefile=None):
         """
         Send image to remote image server.
         """
 
-        if filename is None:
-            filename = self.remote_imageserver_filename
-        self.remote_imageserver_filename = filename
+        if localfile is None:
+            localfile = f"{azcam.db.exposure.temp_image_file}.{azcam.db.exposure.get_extname(self.filetype)}"
+
+        if remotefile is None:
+            remotefile = f"{self.remote_imageserver_filename}.{azcam.db.exposure.get_extname(self.filetype)}"
 
         self.overwrite = azcam.db.exposure.overwrite
         self.test_image = azcam.db.exposure.test_image
@@ -80,22 +82,24 @@ class SendImage(Tools):
         self.size_y = azcam.db.exposure.size_y
 
         if self.remote_imageserver_type == "azcam":
-            self.azcam_imageserver(filename)
+            self.azcam_imageserver(localfile, remotefile)
         elif self.remote_imageserver_type == "lbtguider":
-            self.lbtguider_imageserver(filename)
+            self.lbtguider_imageserver(localfile, remotefile)
         elif self.remote_imageserver_type == "dataserver":
-            self.dataserver(filename)
+            self.dataserver(localfile, remotefile)
         else:
             raise azcam.AzcamError("Unknown remote image server type")
 
-    def azcam_imageserver(self, filename):
+    def azcam_imageserver(self, localfile, remotefile):
         """
         Send image to azcam image server.
         """
 
+        remotefile = self.remote_imageserver_filename
+
         # open image file on disk
-        with open(filename, "rb") as dfile:
-            lSize = os.path.getsize(filename)
+        with open(localfile, "rb") as dfile:
+            lSize = os.path.getsize(localfile)
             buff = dfile.read()
 
         # open socket to DataServer
@@ -106,10 +110,10 @@ class SendImage(Tools):
             (self.remote_imageserver_host, int(self.remote_imageserver_port))
         )
 
-        remotefile = filename
-
         if self.overwrite or self.test_image:
             remotefile = "!" + remotefile
+
+        print(remotefile)
 
         # send header
         # file types: 0 FITS, 1 MEF, 2 binary
