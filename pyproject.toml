@@ -11,7 +11,7 @@ documentation = "https://mplesser.github.io/azcam/"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-azcam = { git = "https://github.com/mplesser/azcam.git" }
+azcam = "*"
 
 [tool.poetry.dev-dependencies]
 
