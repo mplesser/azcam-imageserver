@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "azcam-imageserver"
-version = "22.2"
+version = "22.3"
 description = "Azcam extension to suuport a remote image server"
 authors = ["Michael Lesser <mlesser@arizona.edu>"]
 license = "LICENSE"
