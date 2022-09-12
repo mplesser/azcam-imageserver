@@ -1,6 +1,6 @@
 [project]
 name = "azcam-imageserver"
-version = "22.3.1"
+version = "22.3.2"
 description = "Azcam extension to suuport a remote image server"
 license = {file ="LICENSE"}
 readme = "README.md"
@@ -17,3 +17,6 @@ Repository = "https://github.com/mplesser/azcam-imageserver/"
 [build-system]
 requires = ["flit_core >=3.2,<4"]
 build-backend = "flit_core.buildapi"
+
+[tool.flit.module]
+name = "azcam_imageserver"
