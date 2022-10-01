@@ -24,16 +24,8 @@ AbortImageServer = 0
 OK = "OK"
 ERROR = "ERROR"
 
-# ************************************************************************
-# set OS type
-# ************************************************************************
-if os.name == "posix":
-    OS_Type = "linux32"
-else:
-    OS_Type = "win32"
-
 # XPA location
-if OS_Type == "linux32" or OS_Type == "linux64":
+if os.name == "posix":
     xpaset = "xpaset"
     xpaget = "xpaget"
 else:
@@ -148,11 +140,7 @@ class ProcessClientCommand(socketserver.BaseRequestHandler):
                 if Overwrite:
                     os.remove(Filename)
                 else:
-                    s = (
-                        "ERROR "
-                        + Filename
-                        + " already exists but overwrite flag is not set"
-                    )
+                    s = "ERROR " + Filename + " already exists but overwrite flag is not set"
                     print(s)
                     self.ReplytoClient("-2              ")
                     return
@@ -190,10 +178,7 @@ class ProcessClientCommand(socketserver.BaseRequestHandler):
             return
 
         if total_count < Filesize:
-            print(
-                "ERROR reading image.  Received %d of %d bytes"
-                % (total_count, Filesize)
-            )
+            print("ERROR reading image.  Received %d of %d bytes" % (total_count, Filesize))
             self.ReplytoClient("-2              ")  # ERROR
 
         # optionally create lockfile for binary type 2
@@ -258,10 +243,7 @@ class ProcessClientCommand(socketserver.BaseRequestHandler):
         if total_count < count:
             if total_data[0:2] == "-1":
                 return "-1"  # flag to shutdown
-            print(
-                "ERROR reading all data.  Received %d of %d bytes"
-                % (total_count, count)
-            )
+            print("ERROR reading all data.  Received %d of %d bytes" % (total_count, count))
         return total_data
 
     def ReceiveCommand1(self):
@@ -355,9 +337,7 @@ def StartImageServer():
 
 # get command line options
 p = optparse.OptionParser()
-p.add_option(
-    "--listenport", "-l", default=6543, action="store"
-)  # socket port for listening
+p.add_option("--listenport", "-l", default=6543, action="store")  # socket port for listening
 p.add_option(
     "--beep", "-b", default=0, action="store_true"
 )  # BEEP flag to beep when image received
@@ -366,9 +346,7 @@ p.add_option("--verbose", "-v", default=0, action="store_true")  # Verbosity
 p.add_option(
     "--server", "-s", default=0, action="store_true"
 )  # Server (not used but for AzCamTool)
-p.add_option(
-    "--port", "-p", default=0, action="store_true"
-)  # Port (not used but for AzCamTool)
+p.add_option("--port", "-p", default=0, action="store_true")  # Port (not used but for AzCamTool)
 options, arguments = p.parse_args()
 
 ImageServerPort = int(options.listenport)
