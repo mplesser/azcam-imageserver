@@ -33,10 +33,15 @@ else:
     xpaget = "\\ds9\\xpaget.exe"
 
 
-def StartIS():
+def StartIS(options):
     """
     Starts server listening, waiting continuously for image data.
     """
+
+    ImageServerPort = int(options.listenport)
+    LBTGuideMode = int(options.gcslbt)
+    Beep = int(options.beep)
+    Verbose = int(options.verbose)
 
     # set local image server port
     ServerID = ("", ImageServerPort)
@@ -44,10 +49,10 @@ def StartIS():
     # start server (if OK waits here forever)
     try:
         server = Server(ServerID, ProcessClientCommand)
-        print("imagewriter listening for images on " + repr(ServerID))
+        print("Imageserver listening for images on " + repr(ServerID))
         server.serve_forever()
     except Exception as details:
-        print("ERROR starting imagewriter, is it already running? " + str(details))
+        print("ERROR starting imageserver, is it already running? " + str(details))
         time.sleep(1)
 
 
@@ -324,7 +329,7 @@ class Server(socketserver.ThreadingTCPServer, ProcessClientCommand):
         return
 
 
-def StartImageServer():
+def StartImageServer(options):
     """
     Start ImageServer in its own thread.
     """
@@ -334,24 +339,22 @@ def StartImageServer():
 
     return
 
+def start():
+    """
+    Start imageserver for installed command "azcamimageserver".
+    """
 
-# get command line options
-p = optparse.OptionParser()
-p.add_option("--listenport", "-l", default=6543, action="store")  # socket port for listening
-p.add_option(
-    "--beep", "-b", default=0, action="store_true"
-)  # BEEP flag to beep when image received
-p.add_option("--gcslbt", "-g", default=0, action="store_true")  # LBTGuideMode
-p.add_option("--verbose", "-v", default=0, action="store_true")  # Verbosity
-p.add_option(
-    "--server", "-s", default=0, action="store_true"
-)  # Server (not used but for AzCamTool)
-p.add_option("--port", "-p", default=0, action="store_true")  # Port (not used but for AzCamTool)
-options, arguments = p.parse_args()
+    # get command line options
+    p = optparse.OptionParser()
+    p.add_option("--listenport", "-l", default=6543, action="store")  # socket port for listening
+    p.add_option(
+        "--beep", "-b", default=0, action="store_true"
+    )  # BEEP flag to beep when image received
+    p.add_option("--gcslbt", "-g", default=0, action="store_true")  # LBTGuideMode
+    p.add_option("--verbose", "-v", default=0, action="store_true")  # Verbosity
+    options, arguments = p.parse_args()
 
-ImageServerPort = int(options.listenport)
-LBTGuideMode = int(options.gcslbt)
-Beep = int(options.beep)
-Verbose = int(options.verbose)
+    StartIS(options)
 
-StartImageServer()
+if __name__ == "__main__":
+    start()
