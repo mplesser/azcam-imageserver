@@ -1,7 +1,7 @@
 [project]
 name = "azcam-imageserver"
 version = "22.4.1"
-description = "Azcam extension to support a remote image server"
+description = "Azcam application to create a remote image server which receives images from azcamserver"
 license = {file ="LICENSE"}
 readme = "README.md"
 keywords=["ccd", "imaging", "astronomy", "sensors"]
