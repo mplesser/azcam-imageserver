@@ -1,6 +1,6 @@
 [project]
 name = "azcam-imageserver"
-version = "22.4.0"
+version = "22.4.1"
 description = "Azcam extension to support a remote image server"
 license = {file ="LICENSE"}
 readme = "README.md"

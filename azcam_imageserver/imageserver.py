@@ -11,7 +11,6 @@ Command line options:
 import socket
 import os
 import socketserver
-import threading
 import select
 import shutil
 import optparse
@@ -33,18 +32,18 @@ else:
     xpaget = "\\ds9\\xpaget.exe"
 
 
-def StartIS(options):
+def start_is(options):
     """
     Starts server listening, waiting continuously for image data.
     """
 
-    ImageServerPort = int(options.listenport)
-    LBTGuideMode = int(options.gcslbt)
+    port_is = int(options.port)
+    lbto_guidemode = int(options.gcslbt)
     Beep = int(options.beep)
     Verbose = int(options.verbose)
 
     # set local image server port
-    ServerID = ("", ImageServerPort)
+    ServerID = ("", port_is)
 
     # start server (if OK waits here forever)
     try:
@@ -323,21 +322,10 @@ class Server(socketserver.ThreadingTCPServer, ProcessClientCommand):
         AbortImageServer = False
 
         # Exits here when server is aborted
-        print("Closing imagewriter")
+        print("Closing imageserver")
         time.sleep(1)
 
         return
-
-
-def StartImageServer(options):
-    """
-    Start ImageServer in its own thread.
-    """
-
-    ImageThread = threading.Thread(target=StartIS)
-    ImageThread.start()
-
-    return
 
 def start():
     """
@@ -346,7 +334,7 @@ def start():
 
     # get command line options
     p = optparse.OptionParser()
-    p.add_option("--listenport", "-l", default=6543, action="store")  # socket port for listening
+    p.add_option("--port", "-p", default=6543, action="store")  # socket port for listening
     p.add_option(
         "--beep", "-b", default=0, action="store_true"
     )  # BEEP flag to beep when image received
@@ -354,7 +342,7 @@ def start():
     p.add_option("--verbose", "-v", default=0, action="store_true")  # Verbosity
     options, arguments = p.parse_args()
 
-    StartIS(options)
+    start_is(options)
 
 if __name__ == "__main__":
     start()
