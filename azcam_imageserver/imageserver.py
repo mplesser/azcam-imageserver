@@ -1,5 +1,5 @@
 """
-This program listens on a socket to receive an image file from azcamserver.
+This app listens on a socket to receive an image file from azcamserver.
 When data is received it then creates a local image file from that data.
 Command line options:
    - the listening port may be changed, with -l PortNumber.  Default is 6543.
@@ -23,7 +23,7 @@ AbortImageServer = 0
 OK = "OK"
 ERROR = "ERROR"
 
-# XPA location
+# XPA location for image display
 if os.name == "posix":
     xpaset = "xpaset"
     xpaget = "xpaget"
@@ -304,7 +304,6 @@ class Server(socketserver.ThreadingTCPServer, ProcessClientCommand):
     """
 
     def __init__(self, a, b):
-
         socketserver.ThreadingTCPServer.__init__(self, a, b)
 
     def serve_forever(self):
@@ -327,22 +326,29 @@ class Server(socketserver.ThreadingTCPServer, ProcessClientCommand):
 
         return
 
+
 def start():
     """
-    Start imageserver for installed command "azcamimageserver".
+    Start imageserver for installed command "imageserver".
     """
 
-    # get command line options
     p = optparse.OptionParser()
-    p.add_option("--port", "-p", default=6543, action="store")  # socket port for listening
-    p.add_option(
-        "--beep", "-b", default=0, action="store_true"
-    )  # BEEP flag to beep when image received
-    p.add_option("--gcslbt", "-g", default=0, action="store_true")  # LBTGuideMode
-    p.add_option("--verbose", "-v", default=0, action="store_true")  # Verbosity
+
+    # socket port for listening
+    p.add_option("--port", "-p", default=6543, action="store")
+
+    # Beep flag to beep when image is received
+    p.add_option("--beep", "-b", default=0, action="store_true")
+
+    # LBTO GuideMode
+    p.add_option("--gcslbt", "-g", default=0, action="store_true")
+
+    # Verbosity
+    p.add_option("--verbose", "-v", default=0, action="store_true")
     options, arguments = p.parse_args()
 
     start_is(options)
+
 
 if __name__ == "__main__":
     start()

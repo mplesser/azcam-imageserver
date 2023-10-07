@@ -13,7 +13,7 @@ Documentation = "https://azcam.readthedocs.io/"
 Repository = "https://github.com/mplesser/azcam-imageserver/"
 
 [project.scripts]
-azcamimageserver = "azcam_imageserver.imageserver:start"
+imageserver = "azcam_imageserver.imageserver:start"
 
 [build-system]
 requires = ["flit_core >=3.2,<4"]

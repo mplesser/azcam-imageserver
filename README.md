@@ -19,9 +19,9 @@ Command line options are:
 - -g: set guide mode ON
 
 ```
-azcamimageserver
+imageserver
 or
-azcamimageserver -l 1234 -b -v -g
+imageserver -p 1234 -b -v -g
 or
-python -m imageserver -l 1234 -b -v
+python -m azcam_imageserver.imageserver -p 1234 -b -v
 ```
