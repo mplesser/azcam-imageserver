@@ -1,16 +1,15 @@
 [project]
 name = "azcam-imageserver"
-version = "22.4.1"
+version = "23.0"
 description = "Azcam application to create a remote image server which receives images from azcamserver"
-license = {file ="LICENSE"}
+license = { file = "LICENSE" }
 readme = "README.md"
-keywords=["ccd", "imaging", "astronomy", "sensors"]
-authors = [{name="Michael Lesser"},{email = "mlesser@arizona.edu"}]
-dependencies = [
-]
+keywords = ["ccd", "imaging", "astronomy", "sensors"]
+authors = [{ name = "Michael Lesser" }, { email = "mlesser@arizona.edu" }]
+dependencies = []
 
 [project.urls]
-Documentation = "https://mplesser.github.io/azcam/"
+Documentation = "https://azcam.readthedocs.io/"
 Repository = "https://github.com/mplesser/azcam-imageserver/"
 
 [project.scripts]
